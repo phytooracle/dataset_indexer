@@ -2,7 +2,7 @@
 """
 Author : Jeffrey Demieville, Devin Bayly
 Date   : 2023-06-20
-Purpose: Iterates over tar files within a directory, downloads them with iRODS, and indexes each file. 
+Purpose: Iterates over tar files within a directory, downloads them with iRODS, and runs sbatch_indexer.sh on each archive. This should be ran on the HPC filexfer node.
 """
 
 import os
