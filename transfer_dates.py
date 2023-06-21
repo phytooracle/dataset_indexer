@@ -139,7 +139,7 @@ def main():
                     download_tar(path_to_archive)
                     print("Archive downloaded. Running indexer.")
                     index = run_indexer(path_to_archive, args.ssh, args.indexer)
-                    print("Indexing complete. Uploading data.")
+                    print("Indexing complete. Uploading data.", index)
                     upload_index(index, path_to_archive)
                     print("Uploading data complete.")
                     #may need to use this one if the filename is not the output of run_indexer
