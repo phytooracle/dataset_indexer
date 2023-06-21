@@ -101,10 +101,15 @@ def main():
     for scan in dates:
         filelist = get_file_list(scan + '/individual_plants_out/')
         for filename in filelist:
-            if filename.endswith("_segmentation_pointclouds.tar"):
-                path_to_archive = (scan + '/individual_plants_out/' + filename.lstrip())[5:]
-                download_tar(path_to_archive)
-                run_indexer(path_to_archive, args.ssh, args.indexer)
+            #Create index if not present in /individual_plants_out/
+            if filename.endswith("segmentation_pointclouds_index"):
+                continue
+            else:
+                for filename in filelist:
+                    if filename.endswith("_segmentation_pointclouds.tar"):
+                        path_to_archive = (scan + '/individual_plants_out/' + filename.lstrip())[5:]
+                        download_tar(path_to_archive)
+                        run_indexer(path_to_archive, args.ssh, args.indexer)
 
 
 # --------------------------------------------------
