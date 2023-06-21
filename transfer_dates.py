@@ -106,7 +106,7 @@ def upload_index(index_file, path_to_archive):
     '''
     archive_list = path_to_archive.split('/')[:-1]
     destination = ('/').join(archive_list)
-    index = ('/').join([os.getcwd(),str(index_file)])
+    index = ('/').join([os.getcwd(),str(index_file[0])])
     print("index_file: ", index)
     print("destination: ", destination)
     result = sp.run(f'iput -PT {index} {destination}', stdout=sp.PIPE, shell=True)
