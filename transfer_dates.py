@@ -106,9 +106,9 @@ def upload_index(index_file, path_to_archive):
     '''
     archive_list = path_to_archive.split('/')[:-1]
     destination = ('/').join(archive_list)
-    print("index_file: ", index_file)
+    print("index_file: ", str(index_file))
     print("destination: ", destination)
-    result = sp.run(f'iput -PT {index_file} {destination}', stdout=sp.PIPE, shell=True)
+    result = sp.run(f'iput -PT {str(index_file)} {destination}', stdout=sp.PIPE, shell=True)
     
     return result
 
@@ -142,10 +142,6 @@ def main():
                     print("Archive downloaded. Running indexer.")
                     index = run_indexer(path_to_archive, args.ssh, args.indexer)
                     print("Indexing complete. Uploading data.")
-                    #upload_index(index, path_to_archive)
-                    #print("Uploading data complete.")
-                    #may need to use this one if the filename is not the output of run_indexer
-                    print("upload index", [(filename.lstrip()).split('segmentation_pointclouds')[0]+"segmentation_pointclouds_index"])
                     upload_index([(filename.lstrip()).split('segmentation_pointclouds')[0]+"segmentation_pointclouds_index"], path_to_archive)
                     print("Uploading data complete.")
                 else:
