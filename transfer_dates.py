@@ -143,8 +143,8 @@ def main():
                     #upload_index(index, path_to_archive)
                     #print("Uploading data complete.")
                     #may need to use this one if the filename is not the output of run_indexer
-                    print("upload index", [(filename.lstrip()[5:]).split('segmentation_pointclouds')[0]+"segmentation_pointclouds_index"])
-                    upload_index([(filename.lstrip()[5:]).split('segmentation_pointclouds')[0]+"segmentation_pointclouds_index"], path_to_archive)
+                    print("upload index", [(filename.lstrip()).split('segmentation_pointclouds')[0]+"segmentation_pointclouds_index"])
+                    upload_index([(filename.lstrip()).split('segmentation_pointclouds')[0]+"segmentation_pointclouds_index"], path_to_archive)
                     print("Uploading data complete.")
                 else:
                     print("No archive found. Continuing.")
