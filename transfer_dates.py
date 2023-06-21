@@ -65,7 +65,7 @@ def download_tar(path_to_archive):
     Download tar files
     
     Input:
-        - path_to_archive: path to the input data on CyVerse data store
+        - path_to_archive: path to the tar data on CyVerse data store
     Output: 
         - Downloaded tar file
     '''
@@ -80,7 +80,7 @@ def run_indexer(path_to_archive, ssh_account, sbatch_indexer):
     Index tar files
     
     Input:
-        - path_to_archive: path to the input data on CyVerse data store
+        - path_to_archive: path to the tar data on CyVerse data store
         - ssh_account: account to use for ssh to HPC
         - sbatch_indexer: path to sbatch indexer shell script
     Output: 
@@ -92,7 +92,25 @@ def run_indexer(path_to_archive, ssh_account, sbatch_indexer):
     
     return result
     
+
+#-------------------------------------------------------------------------------
+def upload_index(index_file, path_to_archive):
+    '''
+    Uploads index files
     
+    Input:
+        - index_file: path to local index file
+        - path_to_archive: path to the tar data on CyVerse data store
+    Output: 
+        - Uploaded index file
+    '''
+    archive_list = path_to_archive.split('/')[:-1]
+    destination = ('/').join(archive_list)
+    result = sp.run(f'iput -PT {index_file} {destination}', stdout=sp.PIPE, shell=True)
+    
+    return result
+
+
 #-------------------------------------------------------------------------------
 def main():
     dates = get_file_list(args.path)
@@ -105,11 +123,14 @@ def main():
             if filename.endswith("segmentation_pointclouds_index"):
                 continue
             else:
-                for filename in filelist:
-                    if filename.endswith("_segmentation_pointclouds.tar"):
-                        path_to_archive = (scan + '/individual_plants_out/' + filename.lstrip())[5:]
-                        download_tar(path_to_archive)
-                        run_indexer(path_to_archive, args.ssh, args.indexer)
+                if filename.endswith("_segmentation_pointclouds.tar"):
+                    path_to_archive = (scan + '/individual_plants_out/' + filename.lstrip())[5:]
+                    download_tar(path_to_archive)
+                    index = run_indexer(path_to_archive, args.ssh, args.indexer)
+                    upload_index([(filename.lstrip()[5:]).split('segmentation_pointclouds')[0]+"segmentation_pointclouds_index"], path_to_archive)
+
+                    #may need to use this one if the filename is not the output of run_indexer
+                    #upload_index([(filename.lstrip()[5:]).split('segmentation_pointclouds')[0]+"segmentation_pointclouds_index"], path_to_archive)
 
 
 # --------------------------------------------------
