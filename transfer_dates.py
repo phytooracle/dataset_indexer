@@ -131,6 +131,8 @@ def main():
 
                     #may need to use this one if the filename is not the output of run_indexer
                     #upload_index([(filename.lstrip()[5:]).split('segmentation_pointclouds')[0]+"segmentation_pointclouds_index"], path_to_archive)
+                else:
+                    continue
 
 
 # --------------------------------------------------
