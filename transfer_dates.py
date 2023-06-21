@@ -113,26 +113,40 @@ def upload_index(index_file, path_to_archive):
 
 #-------------------------------------------------------------------------------
 def main():
+    print("get scan dates")
     dates = get_file_list(args.path)
+    print("scan dates: ", dates)
     
     # Iterate through all dates within this season
     for scan in dates:
+        print("get file list")
         filelist = get_file_list(scan + '/individual_plants_out/')
+        print("filelist: ", filelist)
         for filename in filelist:
+            print("check for index")
             #Create index if not present in /individual_plants_out/
             if filename.endswith("segmentation_pointclouds_index"):
+                print("Index found. Continuing.")
                 continue
             else:
+                print("No index found.")
                 if filename.endswith("_segmentation_pointclouds.tar"):
                     path_to_archive = (scan + '/individual_plants_out/' + filename.lstrip())[5:]
+                    print("path to archive: ", path_to_archive)
+                    print("downloading tar")
                     download_tar(path_to_archive)
+                    print("Archive downloaded. Running indexer.")
                     index = run_indexer(path_to_archive, args.ssh, args.indexer)
+                    print("Indexing complete. Uploading data.")
                     upload_index(index, path_to_archive)
-
+                    print("Uploading data complete.")
                     #may need to use this one if the filename is not the output of run_indexer
                     #upload_index([(filename.lstrip()[5:]).split('segmentation_pointclouds')[0]+"segmentation_pointclouds_index"], path_to_archive)
                 else:
+                    print("No archive found. Continuing.")
                     continue
+        print("Scan complete. Beginning next scan.")
+    print("All dates complete.")    
 
 
 # --------------------------------------------------
