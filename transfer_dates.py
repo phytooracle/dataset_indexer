@@ -139,11 +139,13 @@ def main():
                     download_tar(path_to_archive)
                     print("Archive downloaded. Running indexer.")
                     index = run_indexer(path_to_archive, args.ssh, args.indexer)
-                    print("Indexing complete. Uploading data.", index)
-                    upload_index(index, path_to_archive)
-                    print("Uploading data complete.")
+                    print("Indexing complete. Uploading data.")
+                    #upload_index(index, path_to_archive)
+                    #print("Uploading data complete.")
                     #may need to use this one if the filename is not the output of run_indexer
-                    #upload_index([(filename.lstrip()[5:]).split('segmentation_pointclouds')[0]+"segmentation_pointclouds_index"], path_to_archive)
+                    print("upload index", [(filename.lstrip()[5:]).split('segmentation_pointclouds')[0]+"segmentation_pointclouds_index"])
+                    upload_index([(filename.lstrip()[5:]).split('segmentation_pointclouds')[0]+"segmentation_pointclouds_index"], path_to_archive)
+                    print("Uploading data complete.")
                 else:
                     print("No archive found. Continuing.")
                     continue
