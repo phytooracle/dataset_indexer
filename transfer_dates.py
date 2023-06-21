@@ -113,6 +113,8 @@ def upload_index(index_file, path_to_archive):
 
 #-------------------------------------------------------------------------------
 def main():
+    args = get_args()
+    
     print("get scan dates")
     dates = get_file_list(args.path)
     print("scan dates: ", dates)
