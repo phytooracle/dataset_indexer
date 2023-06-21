@@ -127,7 +127,7 @@ def main():
                     path_to_archive = (scan + '/individual_plants_out/' + filename.lstrip())[5:]
                     download_tar(path_to_archive)
                     index = run_indexer(path_to_archive, args.ssh, args.indexer)
-                    upload_index([(filename.lstrip()[5:]).split('segmentation_pointclouds')[0]+"segmentation_pointclouds_index"], path_to_archive)
+                    upload_index(index, path_to_archive)
 
                     #may need to use this one if the filename is not the output of run_indexer
                     #upload_index([(filename.lstrip()[5:]).split('segmentation_pointclouds')[0]+"segmentation_pointclouds_index"], path_to_archive)
