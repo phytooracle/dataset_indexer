@@ -132,7 +132,7 @@ def main():
             #Create index if not present in /individual_plants_out/
             if filename.endswith("segmentation_pointclouds_index"):
                 print("Index found. Continuing.")
-                continue
+                break
             else:
                 print("No index found.")
                 if filename.endswith("_segmentation_pointclouds.tar"):
